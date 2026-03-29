@@ -1,0 +1,4 @@
+body { font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.prose p { line-height: 1.6; }
+.ad-slot { min-height: 120px; }
+.table-fixed { table-layout: fixed; }

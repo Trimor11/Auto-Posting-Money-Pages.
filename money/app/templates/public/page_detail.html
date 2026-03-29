@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% from 'partials/ad_slot.html' import ad %}
+{% block content %}
+<article class="max-w-4xl mx-auto py-10 px-4">
+    <nav class="text-xs text-slate-500 uppercase tracking-[0.3em]"><a href="/">Home</a> / {{ page.category.name if page.category else 'Guides' }}</nav>
+    <h1 class="text-3xl font-semibold text-slate-900 mt-4">{{ page.h1 }}</h1>
+    <p class="text-sm text-slate-500 mt-2">Updated {{ page.updated_at.date() }} - {{ page.reading_time }} min read</p>
+    {{ ad(settings.ads_top_code, 'Top of Article') }}
+    <div class="prose prose-slate max-w-none">
+        <p class="lead text-lg text-slate-700">{{ page.intro or 'Use this quick helper to master the task without digging elsewhere.' }}</p>
+        <div class="bg-slate-100 border border-slate-200 rounded-xl p-4 my-6">
+            <p class="text-sm font-semibold text-slate-700">Table of contents</p>
+            <ul class="list-disc pl-5 text-sm text-slate-600 space-y-1 mt-2">
+                {% for section in page.body_json or [] %}
+                <li><a href="#section-{{ loop.index }}" class="hover:text-blue-600">{{ section.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% for section in page.body_json or [] %}
+        <section id="section-{{ loop.index }}" class="mt-8">
+            <h2 class="text-2xl font-semibold text-slate-900">{{ section.title }}</h2>
+            <div class="text-slate-700 mt-3 space-y-3">{{ section.body | safe }}</div>
+        </section>
+        {% endfor %}
+    </div>
+    {{ ad(settings.ads_mid_code, 'Mid Article') }}
+    <section class="bg-slate-100 border border-slate-200 rounded-xl p-6 mt-10">
+        <h2 class="text-xl font-semibold text-slate-900">FAQ</h2>
+        <div class="mt-4 space-y-3">
+            {% for item in page.faq_json or [] %}
+            <details class="bg-white rounded-lg p-4 shadow-sm" open>
+                <summary class="font-semibold text-slate-900 cursor-pointer">{{ item.question }}</summary>
+                <p class="text-slate-600 mt-2">{{ item.answer }}</p>
+            </details>
+            {% endfor %}
+        </div>
+    </section>
+    {% if page.related_topics %}
+    <section class="mt-10">
+        <h2 class="text-xl font-semibold">Related ideas</h2>
+        <ul class="list-disc pl-5 text-slate-600 mt-3 space-y-1">
+            {% for topic in page.related_topics %}
+            <li>{{ topic }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+    {% if related %}
+    <section class="mt-10">
+        <h2 class="text-xl font-semibold">More in this niche</h2>
+        <div class="grid md:grid-cols-2 gap-4 mt-4">
+            {% for rel in related %}
+            <a href="/{{ rel.slug }}" class="block bg-white border border-slate-100 rounded-xl p-4 hover:border-blue-200">
+                <p class="font-semibold">{{ rel.title }}</p>
+                <p class="text-sm text-slate-600">{{ rel.meta_description }}</p>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+    {{ ad(settings.ads_bottom_code, 'Bottom of Article') }}
+    {% if settings.affiliate_block_html %}
+        <div class="mt-10">{{ settings.affiliate_block_html | safe }}</div>
+    {% endif %}
+</article>
+{% if page.schema_json %}
+<script type="application/ld+json">{{ page.schema_json | tojson | safe }}</script>
+{% endif %}
+{% endblock %}

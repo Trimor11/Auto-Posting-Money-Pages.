@@ -1,0 +1,10 @@
+{% macro ad(code, position) %}
+<div class="ad-slot border border-dashed border-slate-200 rounded-lg my-6 p-4 bg-white/80">
+    <p class="text-xs uppercase tracking-[0.2em] text-slate-500 mb-2">Ad placement - {{ position }}</p>
+    {% if code %}
+        {{ code | safe }}
+    {% else %}
+        <p class="text-slate-400 text-sm">Add your ad code for the {{ position }} slot in admin settings.</p>
+    {% endif %}
+</div>
+{% endmacro %}

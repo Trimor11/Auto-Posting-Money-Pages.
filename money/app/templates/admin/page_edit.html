@@ -1,0 +1,27 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold">{{ page.title }}</h1>
+<p class="text-sm text-slate-500">Slug: {{ page.slug }}</p>
+<div class="grid md:grid-cols-2 gap-6 mt-6">
+    <section class="bg-white border border-slate-200 rounded-xl p-5">
+        <h2 class="text-lg font-semibold">Preview</h2>
+        <p class="text-sm text-slate-500">Updated {{ page.updated_at }}</p>
+        <div class="prose prose-slate mt-4 max-h-[500px] overflow-y-auto">
+            {% for section in page.body_json %}
+            <h3>{{ section.title }}</h3>
+            <div>{{ section.body | safe }}</div>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="bg-white border border-slate-200 rounded-xl p-5 space-y-4">
+        <h2 class="text-lg font-semibold">Actions</h2>
+        <form action="/admin/pages/{{ page.id }}/publish" method="post">
+            <button class="w-full bg-green-600 text-white rounded-lg py-2">Publish now</button>
+        </form>
+        <form action="/admin/pages/{{ page.id }}/regenerate" method="post">
+            <button class="w-full bg-blue-600 text-white rounded-lg py-2">Regenerate body</button>
+        </form>
+        <a href="/{{ page.slug }}" class="inline-flex items-center text-blue-600 text-sm">View live -&gt;</a>
+    </section>
+</div>
+{% endblock %}

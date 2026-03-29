@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ meta.title if meta else settings.project_name }}</title>
+    <meta name="description" content="{{ meta.description if meta else '' }}">
+    <link rel="canonical" href="{{ meta.url if meta else settings.site_url }}">
+    <meta property="og:title" content="{{ meta.title if meta else settings.project_name }}">
+    <meta property="og:description" content="{{ meta.description if meta else '' }}">
+    <meta property="og:url" content="{{ meta.url if meta else settings.site_url }}">
+    <meta property="og:site_name" content="{{ settings.project_name }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter/400.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/css/main.css">
+    {% if settings.analytics_snippet %}{{ settings.analytics_snippet | safe }}{% endif %}
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="border-b border-slate-200 bg-white">
+    <div class="max-w-6xl mx-auto flex items-center justify-between py-4 px-4">
+        <a href="/" class="text-xl font-semibold text-blue-600">{{ settings.project_name }}</a>
+        <nav class="space-x-4 text-sm">
+            <a href="/search" class="text-slate-600 hover:text-blue-600">Search</a>
+            <a href="/category/education" class="text-slate-600 hover:text-blue-600">Education</a>
+            <a href="/category/jobs-cv" class="text-slate-600 hover:text-blue-600">Jobs</a>
+            <a href="/category/social-media" class="text-slate-600 hover:text-blue-600">Social</a>
+            <a href="/category/writing-help" class="text-slate-600 hover:text-blue-600">Writing</a>
+        </nav>
+    </div>
+</header>
+<main>
+    {% block content %}{% endblock %}
+</main>
+<footer class="bg-slate-900 text-white mt-10">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 py-8 px-4 text-sm">
+        <div>
+            <p class="font-semibold">{{ settings.project_name }}</p>
+            <p class="text-slate-300">Fresh auto-generated explainers, templates, and quick answers updated daily.</p>
+        </div>
+        <div>
+            <p class="font-semibold">Quick links</p>
+            <ul class="space-y-1 text-slate-300">
+                <li><a href="/search" class="hover:underline">Search</a></li>
+                <li><a href="/privacy" class="hover:underline">Privacy</a></li>
+                <li><a href="/about" class="hover:underline">About</a></li>
+                <li><a href="/contact" class="hover:underline">Contact</a></li>
+            </ul>
+        </div>
+        <div>
+            <p class="font-semibold">Stay updated</p>
+            <p class="text-slate-300">We publish new evergreen explainers each day.</p>
+        </div>
+    </div>
+    <div class="text-center text-xs text-slate-400 pb-4">&copy; {{ settings.project_name }} - All rights reserved.</div>
+</footer>
+</body>
+</html>

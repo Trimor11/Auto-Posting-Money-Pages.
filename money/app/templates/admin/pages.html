@@ -1,0 +1,33 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold">Pages</h1>
+<div class="bg-white border border-slate-200 rounded-xl mt-6 overflow-hidden">
+    <table class="min-w-full text-sm">
+        <thead class="bg-slate-50 text-slate-500 uppercase text-xs">
+            <tr>
+                <th class="text-left px-4 py-3">Title</th>
+                <th class="text-left px-4 py-3">Status</th>
+                <th class="text-left px-4 py-3">Updated</th>
+                <th class="text-left px-4 py-3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for page in pages %}
+            <tr class="border-t border-slate-100">
+                <td class="px-4 py-3"><a href="/admin/pages/{{ page.id }}" class="text-blue-600">{{ page.title }}</a></td>
+                <td class="px-4 py-3">{{ page.status.value }}</td>
+                <td class="px-4 py-3">{{ page.updated_at }}</td>
+                <td class="px-4 py-3 space-x-3">
+                    <form action="/admin/pages/{{ page.id }}/publish" method="post" class="inline">
+                        <button class="text-xs text-green-600">Publish</button>
+                    </form>
+                    <form action="/admin/pages/{{ page.id }}/regenerate" method="post" class="inline">
+                        <button class="text-xs text-slate-500">Regenerate</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

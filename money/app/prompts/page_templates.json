@@ -1,0 +1,12 @@
+{
+  "explanation": {
+    "goal": "Break down a concept with plain language.",
+    "sections": ["What it means", "Quick answer", "Step-by-step", "Pro tips"],
+    "schema": "Article"
+  },
+  "example": {
+    "goal": "Provide plug-and-play templates.",
+    "sections": ["Fast template", "Detailed sample", "Customization", "Checklist"],
+    "schema": "Article"
+  }
+}

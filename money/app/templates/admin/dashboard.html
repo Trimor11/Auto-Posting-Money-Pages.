@@ -1,0 +1,59 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold">Overview</h1>
+<div class="grid md:grid-cols-4 gap-4 mt-6">
+    <div class="bg-white rounded-xl border border-slate-200 p-4">
+        <p class="text-xs uppercase text-slate-500">Keywords</p>
+        <p class="text-3xl font-semibold">{{ stats.keywords }}</p>
+    </div>
+    <div class="bg-white rounded-xl border border-slate-200 p-4">
+        <p class="text-xs uppercase text-slate-500">Queued</p>
+        <p class="text-3xl font-semibold">{{ stats.queued }}</p>
+    </div>
+    <div class="bg-white rounded-xl border border-slate-200 p-4">
+        <p class="text-xs uppercase text-slate-500">Drafts</p>
+        <p class="text-3xl font-semibold">{{ stats.drafts }}</p>
+    </div>
+    <div class="bg-white rounded-xl border border-slate-200 p-4">
+        <p class="text-xs uppercase text-slate-500">Published</p>
+        <p class="text-3xl font-semibold">{{ stats.published }}</p>
+    </div>
+</div>
+<div class="mt-10 grid md:grid-cols-2 gap-6">
+    <section class="bg-white border border-slate-200 rounded-xl p-5">
+        <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold">Recent pages</h2>
+            <a href="/admin/pages" class="text-sm text-blue-600">Manage</a>
+        </div>
+        <ul class="divide-y divide-slate-100 mt-4">
+            {% for page in recent_pages %}
+            <li class="py-3">
+                <p class="font-medium"><a href="/admin/pages/{{ page.id }}">{{ page.title }}</a></p>
+                <p class="text-xs text-slate-500">{{ page.status.value }} - {{ page.updated_at }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+    <section class="bg-white border border-slate-200 rounded-xl p-5">
+        <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold">Job log</h2>
+        </div>
+        <ul class="divide-y divide-slate-100 mt-4 text-sm">
+            {% for log in logs %}
+            <li class="py-3">
+                <p class="font-semibold text-slate-700">{{ log.level }}</p>
+                <p class="text-slate-500">{{ log.message }}</p>
+                <p class="text-xs text-slate-400">{{ log.created_at }}</p>
+            </li>
+            {% else %}
+            <li>No logs yet.</li>
+            {% endfor %}
+        </ul>
+    </section>
+</div>
+<div class="mt-10 flex gap-4">
+    <form action="/admin/publish-now" method="post">
+        <button class="px-5 py-3 bg-blue-600 text-white rounded-xl">Publish queued drafts</button>
+    </form>
+</div>
+{% endblock %}
